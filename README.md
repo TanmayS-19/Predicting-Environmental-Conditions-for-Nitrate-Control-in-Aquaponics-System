@@ -64,18 +64,18 @@ Understanding the data is crucial to building an effective predictive model. Bel
 
 ### 1. Distribution of Fish Categories
 
-![image](https://github.com/user-attachments/assets/94314e30-1b8b-48ed-aa1e-86c2dc773d22)
+![image](https://github.com/user-attachments/assets/de4d3f17-1b27-4a75-8577-5cb3cc6ea184)
 
 The dataset comprises three fish categories: **A**, **B**, and **C**. The distribution of fishes across these categories is as follows:
-- **Category A**: 35.8%
-- **Category B**: 42.3%
-- **Category C**: 21.9%
+- **Category A**: 39.8%
+- **Category B**: 31.0%
+- **Category C**: 29.2%
 
-This distribution indicates that **Category B** dominates the dataset, followed by **Category A** and **Category C**. The representation of each category ensures a balanced analysis, with significant insights derived for each fish type.
+This distribution indicates that **Category A** dominates the dataset, followed by **Category B** and **Category C**. The representation of each category ensures a balanced analysis, with significant insights derived for each fish type.
 
 ### 2. Nitrate Levels by Fish Category and Size
 
-![image](https://github.com/user-attachments/assets/e15d507a-9ff0-418c-ae57-369658f0a281)
+![image](https://github.com/user-attachments/assets/49ce206c-6802-49a0-8af8-d62b2dd95d7b)
 
 To explore the relationship between fish categories, sizes, and nitrate levels, the data was visualized using bar plots. The findings reveal:
 - **Smaller fish (Size S)** consistently exhibit **lower nitrate levels** across all categories.
@@ -84,6 +84,180 @@ To explore the relationship between fish categories, sizes, and nitrate levels, 
 This pattern highlights the correlation between fish size and nitrate levels, suggesting that larger fish populations may require careful monitoring to maintain the desired nitrate balance. The insight helps practitioners better manage environmental parameters based on the composition of their aquaponics systems.
 
 
+# Results
+
+## Introduction
+For our use case, we decided to go with **Decision Tree (DT)**, **Random Forest (RF)**, and **Extreme Gradient Boosting (XGB)** due to the multi-output regression scenario. Each model was selected for its unique strengths and capabilities in predicting environmental conditions:  
+
+- **Decision Tree (DT):** Chosen for its simplicity and interpretability, providing a baseline for comparison.  
+- **Random Forest (RF):** Utilized for its ensemble learning approach, which effectively handles non-linear relationships.  
+- **XGBoost (XGB):** Selected for its scalability, robust performance, and ability to capture complex interactions through boosting techniques.
+
+To optimize performance, we implemented **automated hyperparameter tuning** using iterative looping techniques. This approach allowed us to identify the most optimized parameters for each model and maximize their predictive accuracy.
+
+---
+
+## Model Evaluation Process
+We evaluated each model based on performance metrics such as **Mean Squared Error (MSE)**, **Root Mean Squared Error (RMSE)**, and **R² Score**. Additionally, we visualized the alignment of predicted vs. actual values for each model using scatter plots.
+
+### Visualization of Results
+To assess the model predictions visually, we created scatter plots comparing actual vs. predicted values for each feature. Each plot also includes a regression line to highlight the model's performance trends. These visualizations allowed us to evaluate the degree of alignment between predicted and actual outputs, offering clear insights into each model's accuracy.
+
+---
+
+## Decision Tree (DT) Results
+
+### Model Performance
+
+![image](https://github.com/user-attachments/assets/f41b0713-34e3-4784-8f35-42dfdf0333bb)
+
+### Implementation of the model
+For a sample input:
+
+Sample Data from our Dataset:
+- Temperature (C): 26.3125
+- Turbidity (NTU): 100
+- Dissolved Oxygen (mg/L): 3.2
+- pH: 4.36175
+- Ammonia (mg/L): 1.00036
+- Nitrate (mg/L): 1100
+- Population: 50
+- Fish Length (cm): 33.24
+- Fish Weight (g): 320.45
+- Category: A
+- Size: L
+
+![image](https://github.com/user-attachments/assets/f4966290-8a3c-4407-937e-2ee86b9904be)
+
+
+The recommended environmental conditions are:  
+
+![image](https://github.com/user-attachments/assets/5b7a2800-344a-47cf-9dfc-4f359782178c)
+
+
+### Observations from Visualizations
+
+![image](https://github.com/user-attachments/assets/2f57d143-77ef-4202-b73b-288534bd1d25)
+
+
+- The scatter plots for **DT** reveal moderate alignment between predicted and actual values, with notable deviations for certain features.  
+- The regression lines indicate some predictive capability, but the variance around these lines reflects the model’s limitations in capturing intricate relationships.
+
+**Conclusion for DT:** While DT provides a simple and interpretable solution, it struggles with the complexity of the multi-output regression task.
+
+---
+
+## Random Forest (RF) Results
+
+### Model Performance
+
+![image](https://github.com/user-attachments/assets/e2c3ff17-f67c-43e4-92fd-0833588ecf59)
+
+### Implementation of the model
+For a sample input: 
+
+Sample Data from our Dataset:
+- Temperature (C): 24.87525695
+- Turbidity (NTU): 100
+- Dissolved Oxygen (mg/L): 25.42495793
+- pH: 8.521656782
+- Ammonia (mg/L): 28.0886918
+- Nitrate (mg/L): 909
+- Population: 75
+- Fish Length (cm): 19.46
+- Fish Weight (g): 73.1
+- Category: B
+- Size: M
+
+![image](https://github.com/user-attachments/assets/5efecf9a-feba-4945-81e4-b5344c828cbb)
+
+The recommended environmental conditions are:  
+
+![image](https://github.com/user-attachments/assets/81aa485d-852d-4e9a-a5c8-fcaaceaf5409)
+
+
+### Observations from Visualizations
+
+![image](https://github.com/user-attachments/assets/120e1325-949e-4b70-88a7-9142ec303787)
+
+- The scatter plots for **RF** demonstrate better alignment between predicted and actual values compared to DT, with reduced variance around the regression lines.  
+- The model effectively captures trends for most features, major deviations are observed for Dissolved Oxygen with some minor deviations for other features.
+
+**Conclusion for RF:** RF’s ensemble learning approach enhances prediction accuracy and robustness, making it a reliable alternative for multi-output regression.
+
+---
+
+## XGBoost (XGB) Results
+
+
+### Model Performance
+
+
+![image](https://github.com/user-attachments/assets/a031b228-abd9-4212-a18c-1534a4aa4c73)
+
+
+
+### Implementation of the model
+For a sample input:
+
+Sample Data from our Dataset:
+- Temperature (C): 24.87480289
+- Turbidity (NTU): 99
+- Dissolved Oxygen (mg/L): 31.12043703
+- pH: 8.519841242
+- Ammonia (mg/L): 50.91882442
+- Nitrate (mg/L): 1223
+- Population: 75
+- Fish Length (cm): 35.12
+- Fish Weight (g): 195.2
+- Category: B
+- Size: L
+
+![image](https://github.com/user-attachments/assets/a59daec3-b6c1-49f7-89c0-49e71358adc3)
+
+
+The recommended environmental conditions are:  
+
+![image](https://github.com/user-attachments/assets/cc7b5b5b-5b43-4ce0-9a78-3f623cc55ec8)
+
+
+### Observations from Visualizations
+
+![image](https://github.com/user-attachments/assets/ced935f1-7f4b-4cc0-ac75-b26ec300985d)
+
+- The scatter plots for **XGB** show strong alignment between predicted and actual values, with minimal deviations.  
+- The regression lines closely fit the data points, indicating high predictive accuracy across all features except Dissolved Oxygen.
+
+**Conclusion for XGB:** XGBoost demonstrates exceptional performance, making it the most suitable model for this multi-output regression task.
+
+---
+
+## Model Comparison and Final Observations
+### Summary Table
+| Model          | MSE      | RMSE    | R² Score |
+|----------------|----------|---------|----------|
+| Decision Tree  | 24.8122  | 4.9812  | 0.7231   |
+| Random Forest  | 22.7593  | 4.7707  | 0.7633   |
+| XGBoost        | 14.9467  | 3.8661  | 0.8502   |
+
+### Key Takeaways
+- **XGBoost** delivers the best performance due to its ability to capture complex interactions, making it ideal for this scenario.  
+- **Random Forest** strikes a balance between interpretability and performance, serving as a robust alternative to XGBoost.  
+- **Decision Tree** provides a simple baseline but lacks the capacity to model intricate relationships effectively.
+
+In the next section, we will conclude by summarizing the results and justifying why **XGBoost** is the optimal choice for our data and use case.
+
+## Conclusion
+
+This project successfully developed a predictive machine learning model to assist aquaponics practitioners in maintaining optimal environmental conditions for achieving desired nitrate levels. By leveraging input data such as the farmer's nitrate requirements, fish category, size, and population, we utilized advanced algorithms to predict key environmental parameters like temperature, turbidity, dissolved oxygen, pH, and ammonia levels. 
+
+Our use case demonstrates the practical utility of this model: farmers provide specific details about their aquaponics system, and the model outputs precise recommendations to help maintain ideal nitrate levels. Among the models evaluated, XGBoost emerged as the most effective due to its ability to capture complex interactions within the dataset and its superior performance metrics compared to Decision Tree and Random Forest models. The robust scalability and fine-tuning capabilities of XGBoost made it the optimal choice for this multi-output regression task.
+
+This predictive framework provides a data-driven solution for aquaponics practitioners, enabling them to maximize yield by maintaining an ideal balance between fish and plant health. The model not only reduces guesswork but also minimizes resource wastage, contributing to eco-friendly and sustainable farming practices. By addressing the challenge of nitrate imbalance, our solution empowers practitioners to enhance productivity, optimize system efficiency, and adapt to changing conditions with ease.
+
+Practitioners can implement this project by integrating real-time data from IoT-enabled sensors into the predictive model pipeline. The outputs can guide them in adjusting system parameters to achieve desired outcomes, making aquaponics systems more accessible and efficient for farmers at all levels. This innovative approach transforms aquaponics management into a precision-oriented process, ensuring that farmers can consistently achieve high yields while maintaining ecological sustainability.
+
+Through this project, we have demonstrated the significant potential of machine learning in advancing aquaponics farming, paving the way for further innovations in sustainable agriculture.
 
 
 
